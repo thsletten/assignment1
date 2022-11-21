@@ -1,0 +1,36 @@
+{
+  "name": "Game site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "nodemon": "^2.0.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^3.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^7.3.0"
+  },
+  "scripts": {
+    "dev": "concurrently npm:dev:server npm:dev:client",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pg6301-fall2022/exa,-thsletten"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pg6301-fall2022/l2_livecode/issues"
+  },
+
+}
