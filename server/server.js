@@ -6,11 +6,13 @@ const app = express();
 
 const GAMES = [
     {
+        id: 1,
         title: "Plan 9 server",
         year: 1957,
         genre: "jumping game"
     },
     {
+        id:2,
         title: "Dune - server",
         year: 2021,
         genre: "desert game."

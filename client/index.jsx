@@ -8,6 +8,7 @@ const root = ReactDOM.createRoot(document.getElementById("app"));
 function FrontPage(){
     return <div>
             <h1> Game list </h1>
+
             <ul>
                 <li><Link to="/games"> List Games </Link></li>
                 <li><Link to="/games/selector"> Random Game Selector </Link> </li>
@@ -31,11 +32,13 @@ function ListGames({gameApi}){
 
     const [games, setGames] = useState();
 
-    useEffect( async () => {
+    useEffect(  () => {
+        async function fetchData(){
         console.log("use effect is called! yey!");
         setGames(undefined);
         setGames(await gameApi.listGames());
-        }, []);
+        }
+        fetchData();}, []);
 
     if(!games){
         console.log(games)
@@ -49,13 +52,12 @@ function ListGames({gameApi}){
             {
 
                 games.map( m =>
-                    <>
+                    <div key={m.id}>
                         <h2> {m.title} - {m.year}</h2>
-                        <div key={m.title}>
-                            {m.genre}
+                        <div>
                             <h3> <Link to="/games/nyside"> home </Link></h3>;
                         </div>
-                    </>
+                    </div>
                 )
             }
         </div>
