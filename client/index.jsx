@@ -10,35 +10,50 @@ function FrontPage(){
             <h1> Game list </h1>
             <ul>
                 <li><Link to="/games"> List Games </Link></li>
-                <li><Link to="/movies/new"> Random Game Selector </Link> </li>
+                <li><Link to="/games/selector"> Random Game Selector </Link> </li>
+                <li><Link to="/games/nyside"> ny side :) </Link> </li>
             </ul>
         </div>
 
 }
+function NySide({gameApi}){
+console.log("NY SIDE");
+return <div> <h1>en ny side :)</h1>
+    <Link to="/"> ny side :) </Link>
 
-function ListMovies({gameApi}){
 
-    const [movies, setMovies] = useState();
+
+</div>
+
+}
+
+function ListGames({gameApi}){
+
+    const [games, setGames] = useState();
 
     useEffect( async () => {
         console.log("use effect is called! yey!");
-        setMovies(undefined);
-        setMovies(await gameApi.listMovies());
+        setGames(undefined);
+        setGames(await gameApi.listGames());
         }, []);
 
     if(!games){
+        console.log(games)
         return <div> Loading... </div>
     }
 
+
     return(
         <div>
-            <h1> Listing all Movies </h1>
+            <h1> Listing all Games </h1>
             {
+
                 games.map( m =>
                     <>
                         <h2> {m.title} - {m.year}</h2>
                         <div key={m.title}>
                             {m.genre}
+                            <h3> <Link to="/games/nyside"> home </Link></h3>;
                         </div>
                     </>
                 )
@@ -50,19 +65,20 @@ function ListMovies({gameApi}){
 function AddGame({gameApi}){
     const [title, setTitle] = useState("");
     const [year, setYear] = useState("");
-    const [genre, setgenre] = useState("");
+    const [genre, setGenre] = useState("");
 
     const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault();
-        await gameApi.onAddMovie({title, year, genre});
+        await gameApi.onAddGame({title, year, genre});
         navigate("/");
+        console.log({title, year, genre})
     }
 
     return(
         <form onSubmit={handleSubmit}>
-            <h1> New movie details </h1>
+            <h1> New game details </h1>
             <div>
                 <label> Title: <input value={title} onChange={e => setTitle(e.target.value)}/> </label>
             </div>
@@ -70,7 +86,7 @@ function AddGame({gameApi}){
                 <label> Year: <input value={year} onChange={e => setYear(e.target.value)}/> </label>
             </div>
             <div>
-                <label> Synopsis: <input value={genre} onChange={e => setSynopsis(e.target.value)}/> </label>
+                <label> Genre: <input value={genre} onChange={e => setGenre(e.target.value)}/> </label>
             </div>
             <button>Submit</button>
         </form>
@@ -80,7 +96,7 @@ function AddGame({gameApi}){
 function Application(){
 
     const gameApi = {
-        onAddMovie: async (m) => {
+        onAddGame: async (m) => {
             await fetch("/api/games", {
                 method: "POST",
                 headers: {
@@ -89,8 +105,8 @@ function Application(){
                 body: JSON.stringify(m)
             })
         },
-        listMovies: async () => {
-            const res = await fetch("/api/movies");
+        listGames: async () => {
+            const res = await fetch("/api/games");
             return res.json();
         }
     }
@@ -98,8 +114,9 @@ function Application(){
     return <BrowserRouter>
         <Routes>
             <Route path="/" element={<FrontPage/>}></Route>
-            <Route path="/games" element={<ListMovies movieApi={movieApi}/>}></Route>
-            <Route path="/games/selector" element={<Addgame gameApi={gameApi}/>}></Route>
+            <Route path="/games" element={<ListGames gameApi={gameApi}/>}></Route>
+            <Route path="/games/selector" element={<AddGame gameApi={gameApi}/>}></Route>
+            <Route path="/games/nyside" element={<NySide gameApi={gameApi}/>}></Route>
         </Routes>
     </BrowserRouter>
 }

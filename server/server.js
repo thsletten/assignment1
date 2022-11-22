@@ -6,14 +6,14 @@ const app = express();
 
 const GAMES = [
     {
-        title: "Plan 9 from outer space - server",
+        title: "Plan 9 server",
         year: 1957,
-        genre: "A complete mess, but Bela Lugosi is in it"
+        genre: "jumping game"
     },
     {
         title: "Dune - server",
         year: 2021,
-        genre: "The spice must flow."
+        genre: "desert game."
     }
 ];
 
@@ -24,8 +24,8 @@ app.get("/api/games", (req, res) => {
 });
 
 app.post("/api/games", (req, res) =>{
-    const {title, year, synopsis} = req.body;
-    GAMES.push({title, year, games});
+    const {title, year, genre} = req.body;
+    GAMES.push({title, year, genre});
     res.sendStatus(200);
 });
 
